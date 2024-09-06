@@ -115,6 +115,9 @@ let encounterButton = document.getElementById("pokemonEncounterButton");
 // encounterButton.addEventListener("click", (event) => getPokemon(event));
 encounterButton.addEventListener("click", async (event) => {
 
+    // Reset container
+    pokemonRenderArea.innerText = "";
+
     console.log("Some block of code in the event listener");
 
     // wait for data to come through
@@ -128,6 +131,8 @@ encounterButton.addEventListener("click", async (event) => {
 let encounterGroupButton = document.getElementById("pokemonGroupEncounter");
 
 encounterGroupButton.addEventListener("click", async () => {
+
+    
      
     // We can do the below code in a more efficient way
     // let pokemonResult1 = await getPokemon();
@@ -167,5 +172,5 @@ encounterGroupButton.addEventListener("click", async () => {
     // multiplePokemonResult.forEach((pokemonResult) => {
     //     renderPokemonData(pokemonResult)
     // });
-    
+
 });
