@@ -27,45 +27,52 @@ function renderPokemonData(pokemonData) {
     let pokemonContainerDiv = document.createElement("div");
     pokemonContainerDiv.classList += "pokemonCardEntry";
 
+    // Image 
     let pokemonImage = document.createElement("img");
+    // pokemonData being passed to function from encounter button 
+    // function with random id pokemon data
     pokemonImage.src = pokemonData.image;
+    // Append to the container
     pokemonContainerDiv.appendChild(pokemonImage);
 
     let pokemonHeading = document.createElement("h1");
     pokemonHeading.innerText = pokemonData.name;
     pokemonContainerDiv.appendChild(pokemonHeading);
 
+    // Types h3 heading
     let pokemonTypesHeading =  document.createElement("h3");
     pokemonTypesHeading.innerText = "Types:";
     pokemonContainerDiv.appendChild(pokemonTypesHeading);
 
 
-
+    // Types list
     let pokemonTypeList = document.createElement("ul");
+    // Have to loop through because as array
     pokemonData.types.forEach((typeObject) => {
         // PokemonData.types is an array
-
         // need to make one li element per type
-
         // and append that to the ul element 
 
         let pokemonTypeListItem = document.createElement("li");
         pokemonTypeListItem.innerText = typeObject.type.name;
+        // Append to list item
         pokemonTypeList.appendChild(pokemonTypeListItem);
     });
-
+    // Append to list
     pokemonContainerDiv.appendChild(pokemonTypeList);
 
-
+    // Audio button, when clicked play audio
     let pokemonAudioButton = document.createElement("button");
     pokemonAudioButton.innerText = "Play Sound";
     pokemonAudioButton.addEventListener("click", () => {
+        // Create audo object with new Audio class
         let pokemonAudioObject = new Audio(pokemonData.sound);
         pokemonAudioObject.play();
 
     })
     pokemonContainerDiv.appendChild(pokemonAudioButton);
 
+    // Append all data to contrainer
     pokemonRenderArea.appendChild(pokemonContainerDiv);
 }
 
@@ -118,3 +125,47 @@ encounterButton.addEventListener("click", async (event) => {
     renderPokemonData(pokemonResult)
     });
 
+let encounterGroupButton = document.getElementById("pokemonGroupEncounter");
+
+encounterGroupButton.addEventListener("click", async () => {
+     
+    // We can do the below code in a more efficient way
+    // let pokemonResult1 = await getPokemon();
+    // renderPokemonData(pokemonResult1);
+    // let pokemonResult2 = await getPokemon();
+    // renderPokemonData(pokemonResult2);
+    // let pokemonResult3 = await getPokemon();
+    // renderPokemonData(pokemonResult3);
+    // let pokemonResult4 = await getPokemon();
+    // renderPokemonData(pokemonResult4);
+    // let pokemonResult5 = await getPokemon();
+    // renderPokemonData(pokemonResult5);
+    // let pokemonResult6 = await getPokemon();
+    // renderPokemonData(pokemonResult6);
+
+    // Starts all async promises at the same time
+    // don't have to wait for the one above to finish 
+    // below running
+    // Wait for all promises to resolve before returning
+    let multiplePokemonResult = await Promise.all([
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+        getPokemon(),
+        getPokemon()
+
+    ]);
+
+    console.log(multiplePokemonResult);
+
+
+    multiplePokemonResult.forEach(renderPokemonData);
+
+    // Both same as above but more explicit 
+    // multiplePokemonResult.forEach((pokemonResult) => renderPokemonData(pokemonResult));
+    // multiplePokemonResult.forEach((pokemonResult) => {
+    //     renderPokemonData(pokemonResult)
+    // });
+    
+});
